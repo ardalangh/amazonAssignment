@@ -80,6 +80,40 @@ public class KivaMoveTest {
     }
 
 
+    /* TURN RIGHT TEST CASES */
+    public void testTurnRightFromUp() {
+        Kiva kiva = new Kiva(defaultMap);
+        kiva.setDirectionFacing(FacingDirection.UP);
+        kiva.move(KivaCommand.TURN_RIGHT);
+        verifyKivaState("testTurnRightFromUp",
+                kiva, new Point(2, 2), FacingDirection.RIGHT, false, false);
+    }
+
+    public void testTurnRightFromDown() {
+        Kiva kiva = new Kiva(defaultMap);
+        kiva.setDirectionFacing(FacingDirection.DOWN);
+        kiva.move(KivaCommand.TURN_RIGHT);
+        verifyKivaState("testTurnRightFromDown",
+                kiva, new Point(2, 2), FacingDirection.LEFT, false, false);
+    }
+
+    public void testTurnRightFromRight() {
+        Kiva kiva = new Kiva(defaultMap);
+        kiva.setDirectionFacing(FacingDirection.RIGHT);
+        kiva.move(KivaCommand.TURN_RIGHT);
+        verifyKivaState("testTurnRightFromRight",
+                kiva, new Point(2, 2), FacingDirection.DOWN, false, false);
+    }
+
+    public void testTurnRightFromLeft() {
+        Kiva kiva = new Kiva(defaultMap);
+        kiva.setDirectionFacing(FacingDirection.LEFT);
+        kiva.move(KivaCommand.TURN_RIGHT);
+        verifyKivaState("testTurnRightFromLeft",
+                kiva, new Point(2, 2), FacingDirection.UP, false, false);
+    }
+
+
     // For you: create all the other tests and call verifyKivaState() for each
 
     private boolean sameLocation(Point a, Point b) {

@@ -115,31 +115,50 @@ public class Kiva {
         }
     }
 
-    private void moveForwardHelper() {
+
+    private Point forecastFinalPos() {
+        /* Returns the point that the robot would end up in if Forward was called */
+        Point res = null;
         if (this.directionFacing == FacingDirection.UP) {
-            this.currentLocation = new Point(
+            res = new Point(
                     this.currentLocation.getX(),
                     this.currentLocation.getY() + 1
 
             );
         } else if (this.directionFacing == FacingDirection.DOWN) {
-            this.currentLocation = new Point(
+            res = new Point(
                     this.currentLocation.getX(),
                     this.currentLocation.getY() - 1
 
             );
         } else if (this.directionFacing == FacingDirection.LEFT) {
-            this.currentLocation = new Point(
+            res = new Point(
                     this.currentLocation.getX() - 1,
                     this.currentLocation.getY()
 
             );
         } else if (this.directionFacing == FacingDirection.RIGHT) {
-            this.currentLocation = new Point(
+            res = new Point(
                     this.currentLocation.getX() + 1,
                     this.currentLocation.getY()
 
             );
+        }
+        return res;
+    }
+
+
+    private void moveForwardHelper() {
+        Point forecastedFinalKivaPos = forecastFinalPos();
+        if (forecastedFinalKivaPos.getX() > this.map.getMaxRowNum() ||
+                forecastedFinalKivaPos.getY() > this.map.getMaxColNum() ||
+                forecastedFinalKivaPos.getX() < 1 ||
+                forecastedFinalKivaPos.getY() < 1) {
+            throw new IllegalMoveException("Robot is out of bound!");
+        }
+        if (this.map.getObjectAtLocation(forecastedFinalKivaPos) == FloorMapObject.OBSTACLE) {
+            throw new IllegalMoveException("Robot cannot ran into the wall!");
+
         }
     }
 

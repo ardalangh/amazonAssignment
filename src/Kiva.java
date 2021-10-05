@@ -58,13 +58,7 @@ public class Kiva {
     }
 
 
-
-
-
-
-
     /* PRIVATE METHODS */
-
     private void moveTakeHelper() {
         if (!this.carryingPod) {
             this.carryingPod = true;

@@ -54,12 +54,24 @@ public class Kiva {
             moveDropHelper();
         } else if (command == KivaCommand.TAKE) {
             moveTakeHelper();
+        } else {
+            throw new IllegalMoveException("Command Does Not Exists!");
         }
     }
 
 
     /* PRIVATE METHODS */
+
+    private boolean sameLocation(Point a, Point b) {
+        return a.getX() == b.getX() && a.getY() == b.getY();
+    }
+
+
     private void moveTakeHelper() {
+        if (!sameLocation(this.map.getPodLocation(), this.getCurrentLocation())) {
+            throw new NoPodException("No Pod At this position!");
+        }
+
         if (!this.carryingPod) {
             this.carryingPod = true;
             this.successfullyDropped = false;

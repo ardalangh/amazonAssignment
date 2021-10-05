@@ -14,13 +14,28 @@ public class KivaMoveTest {
     FloorMap defaultMap = new FloorMap(defaultLayout);
 
 
+    /* INVALID COMMAND TEST CASE */
+    public void testMoveOutOfBound() {
+        Kiva kiva = new Kiva(defaultMap);
+
+        kiva.move(KivaCommand.TURN_LEFT);
+        kiva.move(KivaCommand.FORWARD);
+
+        try {
+            kiva.move(KivaCommand.FORWARD);
+        } catch (Exception e) {
+            System.out.println("TEST CASE PASSED -- ERR as EXPECTED");
+        }
+    }
+
+
     /* FORWARD TEST CASES */
     public void testForwardFromUp() {
         Kiva kiva = new Kiva(defaultMap);
         kiva.setDirectionFacing(FacingDirection.UP);
         kiva.move(KivaCommand.FORWARD);
         verifyKivaState("testForwardFromUp",
-                kiva, new Point(2, 3), FacingDirection.UP, false, false);
+                kiva, new Point(2, 5), FacingDirection.UP, false, false);
     }
 
     public void testForwardFromLeft() {
@@ -28,7 +43,7 @@ public class KivaMoveTest {
         kiva.setDirectionFacing(FacingDirection.LEFT);
         kiva.move(KivaCommand.FORWARD);
         verifyKivaState("testForwardFromLeft",
-                kiva, new Point(1, 2), FacingDirection.LEFT, false, false);
+                kiva, new Point(1, 4), FacingDirection.LEFT, false, false);
     }
 
     public void testForwardFromRight() {
@@ -36,7 +51,7 @@ public class KivaMoveTest {
         kiva.setDirectionFacing(FacingDirection.RIGHT);
         kiva.move(KivaCommand.FORWARD);
         verifyKivaState("testForwardFromRight",
-                kiva, new Point(3, 2), FacingDirection.RIGHT, false, false);
+                kiva, new Point(3, 4), FacingDirection.RIGHT, false, false);
     }
 
     public void testForwardFromDown() {
@@ -44,7 +59,7 @@ public class KivaMoveTest {
         kiva.setDirectionFacing(FacingDirection.DOWN);
         kiva.move(KivaCommand.FORWARD);
         verifyKivaState("testForwardFromDown",
-                kiva, new Point(2, 1), FacingDirection.DOWN, false, false);
+                kiva, new Point(2, 3), FacingDirection.DOWN, false, false);
     }
 
 
@@ -230,6 +245,16 @@ public class KivaMoveTest {
                     String.format("Expected %s, got %s",
                             expectDropped, actualDropped));
         }
+    }
+
+
+    public static void main(String[] args) {
+        KivaMoveTest kTester = new KivaMoveTest();
+        kTester.testMoveOutOfBound();
+        kTester.testForwardFromUp();
+        kTester.testForwardFromLeft();
+        kTester.testForwardFromDown();
+        kTester.testForwardFromRight();
     }
 }
 

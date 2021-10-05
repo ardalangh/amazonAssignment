@@ -14,11 +14,11 @@ public class Kiva {
     }
 
     public boolean isCarryingPod() {
-        return this.isCarryingPod();
+        return this.carryingPod;
     }
 
     public boolean isSuccessfullyDropped() {
-        return this.isSuccessfullyDropped();
+        return this.successfullyDropped;
     }
 
     public FacingDirection getDirectionFacing() {
@@ -34,11 +34,15 @@ public class Kiva {
 
     /* CONSTRUCTORS */
     public Kiva(FloorMap map) {
+        this.map = map;
         this.currentLocation = map.getInitialKivaLocation();
+        this.directionFacing = FacingDirection.UP;
     }
 
     public Kiva(FloorMap map, Point currentPoint) {
+        this.map = map;
         this.currentLocation = currentPoint;
+        this.directionFacing = FacingDirection.UP;
     }
 
 
@@ -119,6 +123,8 @@ public class Kiva {
     private Point forecastFinalPos() {
         /* Returns the point that the robot would end up in if Forward was called */
         Point res = null;
+
+        System.out.println(this.directionFacing);
         if (this.directionFacing == FacingDirection.UP) {
             res = new Point(
                     this.currentLocation.getX(),
@@ -154,12 +160,15 @@ public class Kiva {
                 forecastedFinalKivaPos.getY() > this.map.getMaxColNum() ||
                 forecastedFinalKivaPos.getX() < 1 ||
                 forecastedFinalKivaPos.getY() < 1) {
-            throw new IllegalMoveException("Robot is out of bound!");
+            throw new IllegalMoveException("Robot is out of bound!" +
+                    "Robot position: " +
+                    forecastedFinalKivaPos);
         }
         if (this.map.getObjectAtLocation(forecastedFinalKivaPos) == FloorMapObject.OBSTACLE) {
             throw new IllegalMoveException("Robot cannot ran into the wall!");
-
         }
+
+        this.currentLocation = forecastedFinalKivaPos;
     }
 
 

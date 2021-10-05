@@ -14,6 +14,7 @@ public class KivaMoveTest {
     FloorMap defaultMap = new FloorMap(defaultLayout);
 
 
+    /* FORWARD TEST CASES */
     public void testForwardFromUp() {
         Kiva kiva = new Kiva(defaultMap);
         kiva.setDirectionFacing(FacingDirection.UP);
@@ -47,6 +48,7 @@ public class KivaMoveTest {
     }
 
 
+    /* TURN LEFT TEST CASES */
     public void testTurnLeftFromUp() {
         Kiva kiva = new Kiva(defaultMap);
         kiva.setDirectionFacing(FacingDirection.UP);
@@ -111,6 +113,27 @@ public class KivaMoveTest {
         kiva.move(KivaCommand.TURN_RIGHT);
         verifyKivaState("testTurnRightFromLeft",
                 kiva, new Point(2, 2), FacingDirection.UP, false, false);
+    }
+
+
+    /* TAKE TEST CASE */
+    public void testTakeOnPod() {
+        Kiva kiva = new Kiva(defaultMap);
+        // face up and move three times
+        kiva.setDirectionFacing(FacingDirection.UP);
+        for (int i = 0; i < 3; i++) {
+            kiva.move(KivaCommand.FORWARD);
+        }
+        // Turn right and move 6 times
+        kiva.setDirectionFacing(FacingDirection.RIGHT);
+        for (int i = 0; i < 6; i++) {
+            kiva.move(KivaCommand.FORWARD);
+        }
+        kiva.move(KivaCommand.TAKE);
+
+        verifyKivaState("testTakeOnPod",
+                kiva, new Point(5, 8), FacingDirection.RIGHT, true, false);
+
     }
 
 

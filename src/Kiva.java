@@ -61,13 +61,13 @@ public class Kiva {
 
 
     /* PRIVATE METHODS */
-
     private boolean sameLocation(Point a, Point b) {
         return a.getX() == b.getX() && a.getY() == b.getY();
     }
 
 
     private void moveTakeHelper() {
+        // if no pod where Kiva is at and command to Take was given throw err
         if (!sameLocation(this.map.getPodLocation(), this.getCurrentLocation())) {
             throw new NoPodException("No Pod At this position!");
         }
@@ -79,6 +79,10 @@ public class Kiva {
     }
 
     private void moveDropHelper() {
+        if (!sameLocation(this.map.getDropZoneLocation(), this.getCurrentLocation())) {
+            throw new IllegalDropZoneException("Cannot Drop Pod In Any Other Position Rather than Drop Position!");
+        }
+
         if (this.carryingPod) {
             this.carryingPod = false;
             this.successfullyDropped = true;

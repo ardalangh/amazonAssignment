@@ -46,6 +46,14 @@ public class KivaConstructorTest {
     }
 
 
+    public static void main(String[] args) {
+        KivaConstructorTest constructorTester = new KivaConstructorTest();
+        constructorTester.testTwoArgumentConstructor();
+        constructorTester.testSingleArgumentConstructor();
+
+    }
+
+
 }
 
 

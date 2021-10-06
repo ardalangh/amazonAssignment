@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class RemoteControl {
@@ -26,12 +27,17 @@ public class RemoteControl {
     }
 
     public static void main(String[] args) {
-        HashMap<Character, KivaCommand> mapCommandNameToKey = new HashMap<>();
-        mapCommandNameToKey.put('F', KivaCommand.FORWARD);
-        mapCommandNameToKey.put('D', KivaCommand.DROP);
-        mapCommandNameToKey.put('L', KivaCommand.TURN_LEFT);
-        mapCommandNameToKey.put('R', KivaCommand.TURN_RIGHT);
-        mapCommandNameToKey.put('T', KivaCommand.TAKE);
+//        HashMap<Character, KivaCommand> mapCommandNameToKey = new HashMap<>();
+//        mapCommandNameToKey.put('F', KivaCommand.FORWARD);
+//        mapCommandNameToKey.put('D', KivaCommand.DROP);
+//        mapCommandNameToKey.put('L', KivaCommand.TURN_LEFT);
+//        mapCommandNameToKey.put('R', KivaCommand.TURN_RIGHT);
+//        mapCommandNameToKey.put('T', KivaCommand.TAKE);
+
+        KivaCommand[] s = {KivaCommand.DROP, KivaCommand.DROP, KivaCommand.DROP};
+//
+        System.out.println(s);
+        System.out.println(Arrays.toString(s));
 
 
     }

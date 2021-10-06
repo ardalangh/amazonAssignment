@@ -69,7 +69,7 @@ public class KivaMoveTest {
         kiva.setDirectionFacing(FacingDirection.UP);
         kiva.move(KivaCommand.TURN_LEFT);
         verifyKivaState("testTurnLeftFromUp",
-                kiva, new Point(2, 2), FacingDirection.LEFT, false, false);
+                kiva, new Point(2, 4), FacingDirection.LEFT, false, false);
     }
 
     public void testTurnLeftFromDown() {
@@ -77,7 +77,7 @@ public class KivaMoveTest {
         kiva.setDirectionFacing(FacingDirection.DOWN);
         kiva.move(KivaCommand.TURN_LEFT);
         verifyKivaState("testTurnLeftFromDown",
-                kiva, new Point(2, 2), FacingDirection.RIGHT, false, false);
+                kiva, new Point(2, 4), FacingDirection.RIGHT, false, false);
     }
 
     public void testTurnLeftFromRight() {
@@ -85,7 +85,7 @@ public class KivaMoveTest {
         kiva.setDirectionFacing(FacingDirection.RIGHT);
         kiva.move(KivaCommand.TURN_LEFT);
         verifyKivaState("testTurnLeftFromRight",
-                kiva, new Point(2, 2), FacingDirection.UP, false, false);
+                kiva, new Point(2, 4), FacingDirection.UP, false, false);
     }
 
     public void testTurnLeftFromLeft() {
@@ -93,17 +93,17 @@ public class KivaMoveTest {
         kiva.setDirectionFacing(FacingDirection.LEFT);
         kiva.move(KivaCommand.TURN_LEFT);
         verifyKivaState("testTurnLeftFromLeft",
-                kiva, new Point(2, 2), FacingDirection.DOWN, false, false);
+                kiva, new Point(2, 4), FacingDirection.DOWN, false, false);
     }
 
 
-    /* TURN RIGHT TEST CASES */
+    /* TURN_RIGHT COMMAND TEST CASES */
     public void testTurnRightFromUp() {
         Kiva kiva = new Kiva(defaultMap);
         kiva.setDirectionFacing(FacingDirection.UP);
         kiva.move(KivaCommand.TURN_RIGHT);
         verifyKivaState("testTurnRightFromUp",
-                kiva, new Point(2, 2), FacingDirection.RIGHT, false, false);
+                kiva, new Point(2, 4), FacingDirection.RIGHT, false, false);
     }
 
     public void testTurnRightFromDown() {
@@ -111,7 +111,7 @@ public class KivaMoveTest {
         kiva.setDirectionFacing(FacingDirection.DOWN);
         kiva.move(KivaCommand.TURN_RIGHT);
         verifyKivaState("testTurnRightFromDown",
-                kiva, new Point(2, 2), FacingDirection.LEFT, false, false);
+                kiva, new Point(2, 4), FacingDirection.LEFT, false, false);
     }
 
     public void testTurnRightFromRight() {
@@ -119,27 +119,29 @@ public class KivaMoveTest {
         kiva.setDirectionFacing(FacingDirection.RIGHT);
         kiva.move(KivaCommand.TURN_RIGHT);
         verifyKivaState("testTurnRightFromRight",
-                kiva, new Point(2, 2), FacingDirection.DOWN, false, false);
+                kiva, new Point(2, 4), FacingDirection.DOWN, false, false);
     }
+
 
     public void testTurnRightFromLeft() {
         Kiva kiva = new Kiva(defaultMap);
         kiva.setDirectionFacing(FacingDirection.LEFT);
         kiva.move(KivaCommand.TURN_RIGHT);
         verifyKivaState("testTurnRightFromLeft",
-                kiva, new Point(2, 2), FacingDirection.UP, false, false);
+                kiva, new Point(2, 4), FacingDirection.UP, false, false);
     }
 
 
     /* TAKE TEST CASE */
     public void testTakeOnPod() {
         Kiva kiva = new Kiva(defaultMap);
+
         // face up and move three times
         kiva.setDirectionFacing(FacingDirection.UP);
         for (int i = 0; i < 3; i++) {
             kiva.move(KivaCommand.FORWARD);
         }
-        // Turn right and move 6 times
+        //Turn right and move 6 times
         kiva.setDirectionFacing(FacingDirection.RIGHT);
         for (int i = 0; i < 6; i++) {
             kiva.move(KivaCommand.FORWARD);
@@ -147,13 +149,17 @@ public class KivaMoveTest {
         kiva.move(KivaCommand.TAKE);
 
         verifyKivaState("testTakeOnPod",
-                kiva, new Point(5, 8), FacingDirection.RIGHT, true, false);
+                kiva, new Point(8, 1), FacingDirection.RIGHT, true, false);
     }
 
 
     /* DROP TEST CASE */
     public void testTakeDropZone() {
+
+
         Kiva kiva = new Kiva(defaultMap);
+
+
         // face up and move three times
         kiva.setDirectionFacing(FacingDirection.UP);
         for (int i = 0; i < 3; i++) {
@@ -180,7 +186,7 @@ public class KivaMoveTest {
         kiva.move(KivaCommand.DROP);
 
         verifyKivaState("testTakeOnPod",
-                kiva, new Point(7, 2), FacingDirection.DOWN, false, true);
+                kiva, new Point(10, 4), FacingDirection.DOWN, false, true);
     }
 
 
@@ -255,6 +261,19 @@ public class KivaMoveTest {
         kTester.testForwardFromLeft();
         kTester.testForwardFromDown();
         kTester.testForwardFromRight();
+
+        kTester.testTurnLeftFromUp();
+        kTester.testTurnLeftFromDown();
+        kTester.testTurnLeftFromLeft();
+        kTester.testTurnLeftFromRight();
+
+
+        kTester.testTurnRightFromUp();
+        kTester.testTurnRightFromDown();
+        kTester.testTurnRightFromLeft();
+        kTester.testTurnRightFromRight();
+        kTester.testTakeOnPod();
+        kTester.testTakeDropZone();
     }
 }
 

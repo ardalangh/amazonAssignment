@@ -53,7 +53,7 @@ public class Kiva {
         } else if (command == KivaCommand.TURN_LEFT) {
             moveTurnLeftHelper();
         } else if (command == KivaCommand.TURN_RIGHT) {
-            moveTurnLeftHelper();
+            moveTurnRightHelper();
         } else if (command == KivaCommand.DROP) {
             moveDropHelper();
         } else if (command == KivaCommand.TAKE) {
@@ -124,17 +124,17 @@ public class Kiva {
         /* Returns the point that the robot would end up in if Forward was called */
         Point res = null;
 
-        System.out.println(this.directionFacing);
+        
         if (this.directionFacing == FacingDirection.UP) {
             res = new Point(
                     this.currentLocation.getX(),
-                    this.currentLocation.getY() + 1
+                    this.currentLocation.getY() - 1
 
             );
         } else if (this.directionFacing == FacingDirection.DOWN) {
             res = new Point(
                     this.currentLocation.getX(),
-                    this.currentLocation.getY() - 1
+                    this.currentLocation.getY() + 1
 
             );
         } else if (this.directionFacing == FacingDirection.LEFT) {
@@ -156,8 +156,8 @@ public class Kiva {
 
     private void moveForwardHelper() {
         Point forecastedFinalKivaPos = forecastFinalPos();
-        if (forecastedFinalKivaPos.getX() > this.map.getMaxRowNum() ||
-                forecastedFinalKivaPos.getY() > this.map.getMaxColNum() ||
+        if (forecastedFinalKivaPos.getX() > this.map.getMaxColNum() ||
+                forecastedFinalKivaPos.getY() > this.map.getMaxRowNum() ||
                 forecastedFinalKivaPos.getX() < 1 ||
                 forecastedFinalKivaPos.getY() < 1) {
             throw new IllegalMoveException("Robot is out of bound!" +
@@ -165,7 +165,7 @@ public class Kiva {
                     forecastedFinalKivaPos);
         }
         if (this.map.getObjectAtLocation(forecastedFinalKivaPos) == FloorMapObject.OBSTACLE) {
-            throw new IllegalMoveException("Robot cannot ran into the wall!");
+            throw new IllegalMoveException("Robot cannot ran into the wall!" + "kiva location: " + forecastedFinalKivaPos);
         }
 
         this.currentLocation = forecastedFinalKivaPos;

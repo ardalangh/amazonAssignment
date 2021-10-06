@@ -40,12 +40,14 @@ public class Kiva {
     /* CONSTRUCTORS */
     public Kiva(FloorMap map) {
         this.map = map;
+        this.successfullyDropped = false;
         this.currentLocation = map.getInitialKivaLocation();
         this.directionFacing = FacingDirection.UP;
     }
 
     public Kiva(FloorMap map, Point currentPoint) {
         this.map = map;
+        this.successfullyDropped = false;
         this.currentLocation = currentPoint;
         this.directionFacing = FacingDirection.UP;
     }
@@ -59,11 +61,20 @@ public class Kiva {
 
     public void move(KivaCommand command) {
         if (command == KivaCommand.FORWARD) {
+            if (this.successfullyDropped) {
+                this.successfullyDropped = false;
+            }
             moveForwardHelper();
         } else if (command == KivaCommand.TURN_LEFT) {
+            if (this.successfullyDropped) {
+                this.successfullyDropped = false;
+            }
             moveTurnLeftHelper();
             this.incrementMotorLifeTime();
         } else if (command == KivaCommand.TURN_RIGHT) {
+            if (this.successfullyDropped) {
+                this.successfullyDropped = false;
+            }
             moveTurnRightHelper();
             this.incrementMotorLifeTime();
         } else if (command == KivaCommand.DROP) {

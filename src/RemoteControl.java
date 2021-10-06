@@ -1,5 +1,7 @@
-import java.util.Arrays;
+import edu.duke.FileResource;
+
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class RemoteControl {
 
@@ -26,18 +28,47 @@ public class RemoteControl {
         return res;
     }
 
-    public static void main(String[] args) {
-//        HashMap<Character, KivaCommand> mapCommandNameToKey = new HashMap<>();
-//        mapCommandNameToKey.put('F', KivaCommand.FORWARD);
-//        mapCommandNameToKey.put('D', KivaCommand.DROP);
-//        mapCommandNameToKey.put('L', KivaCommand.TURN_LEFT);
-//        mapCommandNameToKey.put('R', KivaCommand.TURN_RIGHT);
-//        mapCommandNameToKey.put('T', KivaCommand.TAKE);
 
-        KivaCommand[] s = {KivaCommand.DROP, KivaCommand.DROP, KivaCommand.DROP};
-//
-        System.out.println(s);
-        System.out.println(Arrays.toString(s));
+    public void run() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please select a map file.");
+
+        String mapNumber = scanner.nextLine();
+        int mapNumberInt = Integer.parseInt(mapNumber);
+        if (mapNumberInt > 3 || mapNumberInt < 1) {
+            System.out.println("Map number " + mapNumber + " does not exits!");
+            return;
+        }
+
+
+        FileResource fileResource = new FileResource("src/sample_floor_map" + mapNumber + ".txt");
+        String inputMap = fileResource.asString();
+        FloorMap floorMap = new FloorMap(inputMap);
+        Kiva kiva = new Kiva(floorMap);
+        System.out.println(floorMap);
+        System.out.println("\n\n");
+        System.out.println("Kiva is at position " + kiva.getCurrentLocation());
+        System.out.println("Kiva is pointing at direction " + kiva.getDirectionFacing());
+
+
+        KeyboardResource keyboardResource = new KeyboardResource();
+        System.out.println("Please enter the directions for the Kiva Robot to take.");
+        String directions = keyboardResource.getLine();
+        System.out.println("Directions that you typed in: " + directions);
+
+        KivaCommand[] command = convertToKivaCommands(directions);
+        System.out.println(command[0]);
+        kiva.move(command[0]);
+        System.out.println(kiva.getCurrentLocation());
+
+
+    }
+
+
+    public static void main(String[] args) {
+        RemoteControl rc = new RemoteControl();
+        rc.run();
 
 
     }

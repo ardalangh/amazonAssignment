@@ -45,13 +45,21 @@
       <recent name="$PROJECT_DIR$/src/lib" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.KivaMoveTest">
+  <component name="RunManager" selected="Application.KivaMotorLifeTimeTester">
     <configuration name="&lt;template&gt;" type="TestNG" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
     </configuration>
     <configuration name="KivaCommandTester" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="KivaCommandTester" />
+      <module name="kivaProj" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="KivaMotorLifeTimeTester" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="KivaMotorLifeTimeTester" />
       <module name="kivaProj" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
@@ -81,6 +89,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.KivaMotorLifeTimeTester" />
         <item itemvalue="Application.KivaMoveTest" />
         <item itemvalue="Application.KivaCommandTester" />
       </list>

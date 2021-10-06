@@ -55,15 +55,17 @@ public class Kiva {
     public void incrementMotorLifeTime() {
         this.motorLifeTime += 1000;
     }
-    
+
 
     public void move(KivaCommand command) {
         if (command == KivaCommand.FORWARD) {
             moveForwardHelper();
         } else if (command == KivaCommand.TURN_LEFT) {
             moveTurnLeftHelper();
+            this.incrementMotorLifeTime();
         } else if (command == KivaCommand.TURN_RIGHT) {
             moveTurnRightHelper();
+            this.incrementMotorLifeTime();
         } else if (command == KivaCommand.DROP) {
             moveDropHelper();
         } else if (command == KivaCommand.TAKE) {
@@ -177,7 +179,7 @@ public class Kiva {
         if (this.map.getObjectAtLocation(forecastedFinalKivaPos) == FloorMapObject.OBSTACLE) {
             throw new IllegalMoveException("Robot cannot ran into the wall!" + "kiva location: " + forecastedFinalKivaPos);
         }
-
+        this.incrementMotorLifeTime();
         this.currentLocation = forecastedFinalKivaPos;
     }
 

@@ -4,11 +4,16 @@ public class Kiva {
 
     private Point currentLocation;
     private FacingDirection directionFacing;
+    private long motorLifeTime;
     FloorMap map;
     private boolean carryingPod;
     private boolean successfullyDropped;
 
     /* GETTERS */
+    public long getMotorLifeTime() {
+        return motorLifeTime;
+    }
+
     public Point getCurrentLocation() {
         return currentLocation;
     }
@@ -47,6 +52,11 @@ public class Kiva {
 
 
     /* PUBLIC METHODS */
+    public void incrementMotorLifeTime() {
+        this.motorLifeTime += 1000;
+    }
+    
+
     public void move(KivaCommand command) {
         if (command == KivaCommand.FORWARD) {
             moveForwardHelper();
@@ -124,7 +134,7 @@ public class Kiva {
         /* Returns the point that the robot would end up in if Forward was called */
         Point res = null;
 
-        
+
         if (this.directionFacing == FacingDirection.UP) {
             res = new Point(
                     this.currentLocation.getX(),

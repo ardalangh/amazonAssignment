@@ -39,7 +39,7 @@ public class KivaCommandTester {
     public static void main(String[] args) {
         new KivaCommandTester().testForward();
         new KivaCommandTester().testTurnLeft();
-        new KivaCommandTester().testTurnLeft();
+        new KivaCommandTester().testTurnRight();
         new KivaCommandTester().testTake();
         new KivaCommandTester().testDrop();
     }

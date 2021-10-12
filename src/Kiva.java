@@ -5,7 +5,7 @@ public class Kiva {
     private Point currentLocation;
     private FacingDirection directionFacing;
     private long motorLifeTime;
-    FloorMap map;
+    private final FloorMap map;
     private boolean carryingPod;
     private boolean successfullyDropped;
 
@@ -54,11 +54,23 @@ public class Kiva {
 
 
     /* PUBLIC METHODS */
+
+    /**
+     * @prams: Nothing
+     * @returns: void
+     * adds the motorlife by 1 second
+     */
     public void incrementMotorLifeTime() {
         this.motorLifeTime += 1000;
     }
 
 
+    /**
+     * @prams: KivaCommand command
+     * @returns: void
+     * given a command of time KivaCommand call the appropriate helper method to do the task.
+     * if command is not a valid command throw IllegalMoveException
+     */
     public void move(KivaCommand command) {
         if (command == KivaCommand.FORWARD) {
             if (this.successfullyDropped) {
@@ -82,34 +94,49 @@ public class Kiva {
         } else if (command == KivaCommand.TAKE) {
             moveTakeHelper();
         } else {
-            throw new IllegalMoveException("Command Does Not Exists!");
+            throw new IllegalMoveException("Command: " + command + "does Not Exists!");
         }
     }
 
 
     /* PRIVATE METHODS */
+
+    /**
+     * @prams: Point a, Point b
+     * @returns: boolean
+     * return true if point a and point b are the same and false otherwise
+     */
     private boolean sameLocation(Point a, Point b) {
-        return a.getX() == b.getX() && a.getY() == b.getY();
+        return a.getX() != b.getX() || a.getY() != b.getY();
     }
 
 
+    /**
+     * @prams: Nothing
+     * @returns: void
+     * 1. if there is no pod at the current location throw a NoPodException
+     * 2. if kiva is not carrying any pods, update the appropriate variables
+     */
     private void moveTakeHelper() {
-        // if no pod where Kiva is at and command to Take was given throw err
-        if (!sameLocation(this.map.getPodLocation(), this.getCurrentLocation())) {
-            throw new NoPodException("No Pod At this position!");
+        if (sameLocation(this.map.getPodLocation(), this.getCurrentLocation())) {
+            throw new NoPodException("No Pod At position of " + this.getCurrentLocation());
         }
-
         if (!this.carryingPod) {
             this.carryingPod = true;
             this.successfullyDropped = false;
         }
     }
 
+    /**
+     * @prams: Nothing
+     * @returns: void
+     * 1. if kiva is not at the drop position throw a IllegalDropZoneException err
+     * 2. if kiva is carrying a pod, update the appropriate variables
+     */
     private void moveDropHelper() {
-        if (!sameLocation(this.map.getDropZoneLocation(), this.getCurrentLocation())) {
-            throw new IllegalDropZoneException("Cannot Drop Pod In Any Other Position Rather than Drop Position!");
+        if (sameLocation(this.map.getDropZoneLocation(), this.getCurrentLocation())) {
+            throw new IllegalDropZoneException(this.getCurrentLocation() + " is not a valid dropPoint");
         }
-
         if (this.carryingPod) {
             this.carryingPod = false;
             this.successfullyDropped = true;
@@ -117,6 +144,11 @@ public class Kiva {
     }
 
 
+    /**
+     * @prams: Nothing
+     * @returns: void
+     * based on the current direction adjust the direction after the method is called
+     */
     private void moveTurnRightHelper() {
         if (this.directionFacing == FacingDirection.UP) {
             this.directionFacing = FacingDirection.RIGHT;
@@ -129,7 +161,11 @@ public class Kiva {
         }
     }
 
-
+    /**
+     * @prams: Nothing
+     * @returns: void
+     * based on the current direction adjust the direction after the method is called
+     */
     private void moveTurnLeftHelper() {
         if (this.directionFacing == FacingDirection.UP) {
             this.directionFacing = FacingDirection.LEFT;
@@ -142,12 +178,38 @@ public class Kiva {
         }
     }
 
+    /**
+     * @prams: Nothing
+     * @returns: void
+     * throw a IllegalMoveException if kiva is forecasted to go out of bound or is hitting an obstacle
+     * if all well update the kiva position
+     */
+    private void moveForwardHelper() {
+        Point forecastedFinalKivaPos = forecastFinalPos();
+        if (forecastedFinalKivaPos.getX() > this.map.getMaxColNum() ||
+                forecastedFinalKivaPos.getY() > this.map.getMaxRowNum() ||
+                forecastedFinalKivaPos.getX() < 1 ||
+                forecastedFinalKivaPos.getY() < 1) {
+            throw new IllegalMoveException("Robot is out of bound!" +
+                    "Robot position: " +
+                    forecastedFinalKivaPos);
+        }
+        if (this.map.getObjectAtLocation(forecastedFinalKivaPos) == FloorMapObject.OBSTACLE) {
+            throw new IllegalMoveException("Robot cannot ran into the wall!" + "kiva location: " + forecastedFinalKivaPos);
+        }
+        this.incrementMotorLifeTime();
+        this.currentLocation = forecastedFinalKivaPos;
+    }
 
+
+    /**
+     * @prams: Nothing
+     * @returns: Point
+     * returns the point that the robot would end up in if Forward Command was executed
+     * the position of kiva is not altered by calling this method. This is just a forecast.
+     */
     private Point forecastFinalPos() {
-        /* Returns the point that the robot would end up in if Forward was called */
         Point res = null;
-
-
         if (this.directionFacing == FacingDirection.UP) {
             res = new Point(
                     this.currentLocation.getX(),
@@ -175,24 +237,4 @@ public class Kiva {
         }
         return res;
     }
-
-
-    private void moveForwardHelper() {
-        Point forecastedFinalKivaPos = forecastFinalPos();
-        if (forecastedFinalKivaPos.getX() > this.map.getMaxColNum() ||
-                forecastedFinalKivaPos.getY() > this.map.getMaxRowNum() ||
-                forecastedFinalKivaPos.getX() < 1 ||
-                forecastedFinalKivaPos.getY() < 1) {
-            throw new IllegalMoveException("Robot is out of bound!" +
-                    "Robot position: " +
-                    forecastedFinalKivaPos);
-        }
-        if (this.map.getObjectAtLocation(forecastedFinalKivaPos) == FloorMapObject.OBSTACLE) {
-            throw new IllegalMoveException("Robot cannot ran into the wall!" + "kiva location: " + forecastedFinalKivaPos);
-        }
-        this.incrementMotorLifeTime();
-        this.currentLocation = forecastedFinalKivaPos;
-    }
-
-
 }

@@ -56,7 +56,7 @@ public class Kiva {
     /* PUBLIC METHODS */
 
     /**
-     * @prams: Nothing
+     * @params: Nothing
      * @returns: void
      * adds the motorlife by 1 second
      */
@@ -66,7 +66,7 @@ public class Kiva {
 
 
     /**
-     * @prams: KivaCommand command
+     * @params: KivaCommand command
      * @returns: void
      * given a command of time KivaCommand call the appropriate helper method to do the task.
      * if command is not a valid command throw IllegalMoveException
@@ -102,7 +102,7 @@ public class Kiva {
     /* PRIVATE METHODS */
 
     /**
-     * @prams: Point a, Point b
+     * @params: Point a, Point b
      * @returns: boolean
      * return true if point a and point b are the same and false otherwise
      */
@@ -112,7 +112,7 @@ public class Kiva {
 
 
     /**
-     * @prams: Nothing
+     * @params: Nothing
      * @returns: void
      * 1. if there is no pod at the current location throw a NoPodException
      * 2. if kiva is not carrying any pods, update the appropriate variables
@@ -128,7 +128,7 @@ public class Kiva {
     }
 
     /**
-     * @prams: Nothing
+     * @params: Nothing
      * @returns: void
      * 1. if kiva is not at the drop position throw a IllegalDropZoneException err
      * 2. if kiva is carrying a pod, update the appropriate variables
@@ -145,7 +145,7 @@ public class Kiva {
 
 
     /**
-     * @prams: Nothing
+     * @params: Nothing
      * @returns: void
      * based on the current direction adjust the direction after the method is called
      */
@@ -162,7 +162,7 @@ public class Kiva {
     }
 
     /**
-     * @prams: Nothing
+     * @params: Nothing
      * @returns: void
      * based on the current direction adjust the direction after the method is called
      */
@@ -179,7 +179,7 @@ public class Kiva {
     }
 
     /**
-     * @prams: Nothing
+     * @params: Nothing
      * @returns: void
      * throw a IllegalMoveException if kiva is forecasted to go out of bound or is hitting an obstacle
      * if all well update the kiva position
@@ -203,7 +203,7 @@ public class Kiva {
 
 
     /**
-     * @prams: Nothing
+     * @params: Nothing
      * @returns: Point
      * returns the point that the robot would end up in if Forward Command was executed
      * the position of kiva is not altered by calling this method. This is just a forecast.

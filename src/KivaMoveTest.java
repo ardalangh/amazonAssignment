@@ -14,7 +14,7 @@ public class KivaMoveTest {
     FloorMap defaultMap = new FloorMap(defaultLayout);
 
 
-    /* INVALID COMMAND TEST CASE */
+    /*invalid command test case*/
     public void testMoveOutOfBound() {
         Kiva kiva = new Kiva(defaultMap);
 
@@ -29,7 +29,7 @@ public class KivaMoveTest {
     }
 
 
-    /* FORWARD TEST CASES */
+    /* forward test cases */
     public void testForwardFromUp() {
         Kiva kiva = new Kiva(defaultMap);
         kiva.setDirectionFacing(FacingDirection.UP);
@@ -63,7 +63,7 @@ public class KivaMoveTest {
     }
 
 
-    /* TURN LEFT TEST CASES */
+    /* turn_left test cases */
     public void testTurnLeftFromUp() {
         Kiva kiva = new Kiva(defaultMap);
         kiva.setDirectionFacing(FacingDirection.UP);
@@ -97,7 +97,7 @@ public class KivaMoveTest {
     }
 
 
-    /* TURN_RIGHT COMMAND TEST CASES */
+    /* turn_right test cases */
     public void testTurnRightFromUp() {
         Kiva kiva = new Kiva(defaultMap);
         kiva.setDirectionFacing(FacingDirection.UP);
@@ -132,53 +132,41 @@ public class KivaMoveTest {
     }
 
 
-    /* TAKE TEST CASE */
+    /* take test cases */
     public void testTakeOnPod() {
         Kiva kiva = new Kiva(defaultMap);
-
-        // face up and move three times
         kiva.setDirectionFacing(FacingDirection.UP);
         for (int i = 0; i < 3; i++) {
             kiva.move(KivaCommand.FORWARD);
         }
-        //Turn right and move 6 times
         kiva.setDirectionFacing(FacingDirection.RIGHT);
         for (int i = 0; i < 6; i++) {
             kiva.move(KivaCommand.FORWARD);
         }
         kiva.move(KivaCommand.TAKE);
-
         verifyKivaState("testTakeOnPod",
                 kiva, new Point(8, 1), FacingDirection.RIGHT, true, false);
     }
 
 
-    /* DROP TEST CASE */
+    /* drop test cases */
     public void testTakeDropZone() {
-
-
         Kiva kiva = new Kiva(defaultMap);
-
-
-        // face up and move three times
         kiva.setDirectionFacing(FacingDirection.UP);
         for (int i = 0; i < 3; i++) {
             kiva.move(KivaCommand.FORWARD);
         }
-        // Turn right and move 6 times
         kiva.setDirectionFacing(FacingDirection.RIGHT);
         for (int i = 0; i < 6; i++) {
             kiva.move(KivaCommand.FORWARD);
         }
         kiva.move(KivaCommand.TAKE);
 
-        // move right 2
         kiva.setDirectionFacing(FacingDirection.RIGHT);
         for (int i = 0; i < 2; i++) {
             kiva.move(KivaCommand.FORWARD);
         }
 
-        // face down and move 3 -- end up at the drop point
         kiva.setDirectionFacing(FacingDirection.DOWN);
         for (int i = 0; i < 3; i++) {
             kiva.move(KivaCommand.FORWARD);
@@ -190,7 +178,7 @@ public class KivaMoveTest {
     }
 
 
-    // For you: create all the other tests and call verifyKivaState() for each
+    /* Private Methods */
 
     private boolean sameLocation(Point a, Point b) {
         return a.getX() == b.getX() && a.getY() == b.getY();
@@ -206,50 +194,37 @@ public class KivaMoveTest {
 
         Point actualLocation = actual.getCurrentLocation();
         if (sameLocation(actualLocation, expectLocation)) {
-            System.out.println(
-                    String.format("%s: current location SUCCESS", testName));
+            System.out.printf("%s: current location SUCCESS%n", testName);
         } else {
-            System.out.println(
-                    String.format("%s: current location FAIL!", testName));
-            System.out.println(
-                    String.format("Expected %s, got %s",
-                            expectLocation, actualLocation));
+            System.out.printf("%s: current location FAIL!%n", testName);
+            System.out.printf("Expected %s, got %s%n", expectLocation, actualLocation);
         }
 
         FacingDirection actualDirection = actual.getDirectionFacing();
         if (actualDirection == expectDirection) {
-            System.out.println(
-                    String.format("%s: facing direction SUCCESS", testName));
+            System.out.printf("%s: facing direction SUCCESS%n", testName);
         } else {
-            System.out.println(
-                    String.format("%s: facing direction FAIL!", testName));
-            System.out.println(
-                    String.format("Expected %s, got %s",
-                            expectDirection, actualDirection));
+            System.out.printf("%s: facing direction FAIL!%n", testName);
+            System.out.printf("Expected %s, got %s%n",
+                    expectDirection, actualDirection);
         }
 
         boolean actualCarry = actual.isCarryingPod();
         if (actualCarry == expectCarry) {
-            System.out.println(
-                    String.format("%s: carrying pod SUCCESS", testName));
+            System.out.printf("%s: carrying pod SUCCESS%n", testName);
         } else {
-            System.out.println(
-                    String.format("%s: carrying pod FAIL!", testName));
-            System.out.println(
-                    String.format("Expected %s, got %s",
-                            expectCarry, actualCarry));
+            System.out.printf("%s: carrying pod FAIL!%n", testName);
+            System.out.printf("Expected %s, got %s%n",
+                    expectCarry, actualCarry);
         }
 
         boolean actualDropped = actual.isSuccessfullyDropped();
         if (actualDropped == expectDropped) {
-            System.out.println(
-                    String.format("%s: successfully dropped SUCCESS", testName));
+            System.out.printf("%s: successfully dropped SUCCESS%n", testName);
         } else {
-            System.out.println(
-                    String.format("%s: successfully dropped FAIL!", testName));
-            System.out.println(
-                    String.format("Expected %s, got %s",
-                            expectDropped, actualDropped));
+            System.out.printf("%s: successfully dropped FAIL!%n", testName);
+            System.out.printf("Expected %s, got %s%n",
+                    expectDropped, actualDropped);
         }
     }
 

@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class RemoteControl {
 
 
-    private final Map<Character, KivaCommand> mapCommandNameToKey = new HashMap<>() {{
+    private final Map<Character, KivaCommand> mapCommandNameToKey = new HashMap<Character, KivaCommand>() {{
         put('F', KivaCommand.FORWARD);
         put('D', KivaCommand.DROP);
         put('L', KivaCommand.TURN_LEFT);
